@@ -1,5 +1,5 @@
 import React from 'react';
-import Todo from './todo';
+import Message from './message';
 
 var messages = [
   {name: 'Mitch', message: 'Hello World'},
@@ -11,11 +11,11 @@ var messages = [
 // var messageList = this.props.messages.map(function(message) {
 var messageList = messages.map(function(message) {
   return (
-    <Todo name={message.name} message={message.message} />
+    <Message name={message.name} message={message.message} />
   );
 });
 
-class TodoList extends React.Component {
+class MessageList extends React.Component {
 
     render() {
         return (
@@ -37,4 +37,4 @@ class TodoList extends React.Component {
     }
 }
 
-export default TodoList;
+export default MessageList;

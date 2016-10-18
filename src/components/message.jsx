@@ -1,6 +1,6 @@
 import React from 'react';
 
-class Todo extends React.Component{
+class Message extends React.Component{
   render (){
     return (
       <div className="message row">
@@ -10,4 +10,4 @@ class Todo extends React.Component{
   }
 }
 
-export default Todo;
+export default Message;

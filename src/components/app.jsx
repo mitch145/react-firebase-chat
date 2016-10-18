@@ -1,10 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import TodoList from './todo-list';
+import MessageList from './message-list';
 
-ReactDOM.render(
-    <TodoList/>,
-    document.getElementById('app')
-);
+
+class App extends React.Component{
+  render (){
+    return (
+      <MessageList />
+    )
+  }
+}
 
 export default App
