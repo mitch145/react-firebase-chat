@@ -6,3 +6,5 @@ ReactDOM.render(
     <TodoList/>,
     document.getElementById('app')
 );
+
+export default App

@@ -19,13 +19,13 @@ gulp.task('browser-sync', function() {
 });
 
 gulp.task('watch', ['browser-sync'], function () {
-    gulp.watch('src/*.jsx', ['build']);
+    gulp.watch(['src/*.js', 'src/components/*.jsx', 'src/actions/*.jsx', 'src/reducers/*.jsx'], ['build']);
     gulp.watch("scss/*.scss", ['scss']);
     gulp.watch("*.html").on('change', bs.reload);
 });
 
 gulp.task('build', function () {
-    return browserify({entries: './src/app.jsx', extensions: ['.jsx'], debug: true})
+    return browserify({entries: './src/index.jsx', extensions: ['.jsx'], debug: true})
         .transform('babelify', {presets: ['es2015', 'react']})
         .bundle()
         .pipe(source('bundle.js'))
