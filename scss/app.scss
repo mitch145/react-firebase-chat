@@ -2,8 +2,30 @@
 @import "bootstrap";
 @import "bootswatch";
 
-.todoList{
-  .panel{
-    margin: 20px;
+.message-list{
+  .panel-body{
+    padding: 10px;
+  }
+  .message{
+    margin: 5px 0 5px 0;
+    p{
+      background-color: #ecf0f1;
+      padding: 10px;
+      margin: 0;
+      border-radius: 5px;
+      display: inline-block;
+    }
+    .self{
+
+    }
+    .friend{
+      float:right;
+    }
+  }
+  .message:first-of-type{
+    margin-top: 0;
+  }
+  .message:last-of-type{
+    margin-bottom: 0;
   }
 }
