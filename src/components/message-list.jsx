@@ -11,19 +11,8 @@ class MessageList extends React.Component {
       );
     });
     return (
-      <div className="container message-list">
-        <div className="row">
-          <div className="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
-            <div className="panel panel-default">
-              <div className="panel-heading">
-                <h1 className="text-center">Mitch's Chat App</h1>
-              </div>
-              <div className="panel-body">
-              {messageList}
-              </div>
-            </div>
-          </div>
-        </div>
+      <div className="panel-body">
+      {messageList}
       </div>
     );
   }
