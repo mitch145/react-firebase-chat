@@ -1,34 +1,40 @@
 import React from 'react';
-import { connect } from 'react-redux'
-import { addMessage } from '../actions'
 
-let MessageForm = ({ dispatch }) => {
-  let input
-  return(
-    <div>
-      <form className="panel-footer message-form" onSubmit={ e => {
-        e.preventDefault()
-        if(!input.value.trim()){
-          return
-        }
-        console.log(input.value)
-        dispatch(addMessage('Mitch', input.value))
-        input.value = ''
-      }} >
-        <div className="form-group">
-            <input
-              ref={node => {
-                input = node
-              }}
-              type="text"
-              className="form-control" />
-              <hidden type="submit" />
-        </div>
-      </form>
-    </div>
-  )
+class MessageForm extends React.Component{
+  constructor(){
+    super();
+    this.state = {
+      value: ''
+    }
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  handleChange(event) {
+    this.setState({value: event.target.value});
+  }
+  handleSubmit(event) {
+    event.preventDefault()
+    this.props.sendMessage('AI', this.state.value)
+    this.setState({value: ''})
+  }
+  render(){
+    return(
+      <div>
+        <form className="panel-footer message-form" onSubmit={this.handleSubmit}>
+          <div className="form-group">
+              <input
+                type="text"
+                className="form-control"
+                autoFocus="true"
+                value={this.state.value}
+                onChange={this.handleChange}
+                 />
+          </div>
+        </form>
+      </div>
+    )
+  }
 
 }
-MessageForm = connect()(MessageForm)
 
 export default MessageForm
