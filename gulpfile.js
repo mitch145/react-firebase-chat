@@ -19,7 +19,7 @@ gulp.task('browser-sync', function() {
 });
 
 gulp.task('watch', ['browser-sync'], function () {
-    gulp.watch(['src/*.js', 'src/components/*.jsx', 'src/actions/*.jsx', 'src/reducers/*.jsx'], ['build']);
+    gulp.watch(['src/*.js', 'src/*.jsx', 'src/components/*.jsx', 'src/actions/*.js', 'src/reducers/*.js'], ['build']);
     gulp.watch("scss/*.scss", ['scss']);
     gulp.watch("*.html").on('change', bs.reload);
 });

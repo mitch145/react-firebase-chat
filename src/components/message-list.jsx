@@ -2,16 +2,16 @@ import React from 'react';
 import Message from './message';
 
 var messages = [
-  {name: 'Mitch', message: 'Hello World'},
-  {name: 'Mitch', message: 'What a nice day'},
-  {name: 'AI', message: 'Hello Mitch'},
-  {name: 'Mitch', message: 'How\'s it going?'}
+  {name: 'Mitch', text: 'Hello World'},
+  {name: 'Mitch', text: 'What a nice day'},
+  {name: 'AI', text: 'Hello Mitch'},
+  {name: 'Mitch', text: 'How\'s it going?'}
 ]
 
 // var messageList = this.props.messages.map(function(message) {
 var messageList = messages.map(function(message) {
   return (
-    <Message name={message.name} message={message.message} />
+    <Message name={message.name} text={message.text} />
   );
 });
 
