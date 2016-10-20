@@ -12,12 +12,6 @@ class App extends React.Component{
   constructor(){
     super();
     this.state = {
-    //     sendMessage: function(name, text){
-    //     console.log(this.state)
-    //     this.setState({
-    //       messages: this.state.messages.concat({name: name, text: text}) //updates Firebase and the local state
-    //     });
-    //   },
       messages: [],
       currentUser: 'Mitch'
     }
@@ -30,7 +24,33 @@ class App extends React.Component{
     })
   }
   componentWillMount() {
-
+    var config = {
+      apiKey: "AIzaSyBmiFPSzLtDBgNi2a-v5lIOP75MpI1bSrA",
+      authDomain: "fir-chat-4097b.firebaseapp.com",
+      databaseURL: "https://fir-chat-4097b.firebaseio.com",
+      storageBucket: "fir-chat-4097b.appspot.com",
+      messagingSenderId: "121679038004"
+    };
+    // firebase.initializeApp(config);
+    // var provider = new firebase.auth.FacebookAuthProvider();
+    // firebase.auth().signInWithPopup(provider).then(function(result) {
+    //   // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+    //   var token = result.credential.accessToken;
+    //   // The signed-in user info.
+    //   var user = result.user;
+    //   this.state.user = user.displayName
+    //
+    // }).catch(function(error) {
+    //   // Handle Errors here.
+    //   var errorCode = error.code;
+    //   var errorMessage = error.message;
+    //   // The email of the user's account used.
+    //   var email = error.email;
+    //   // The firebase.auth.AuthCredential type that was used.
+    //   var credential = error.credential;
+    //   // ...
+    // });
+    // console.log(this.state)
     var base = rebase.createClass({
       apiKey: "AIzaSyBmiFPSzLtDBgNi2a-v5lIOP75MpI1bSrA",
       authDomain: "fir-chat-4097b.firebaseapp.com",
@@ -41,6 +61,16 @@ class App extends React.Component{
       context: this,
       state: 'messages'
     });
+    function handleAuthentication(user){
+      
+    }
+    var authHandler = function(error, result) {
+      if(error){
+        console.log(error)
+      };
+      handleAuthentication(result.user);
+    }
+    base.authWithOAuthPopup('facebook', authHandler);
 
   }
   render(){
