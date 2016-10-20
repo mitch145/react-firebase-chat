@@ -18,10 +18,12 @@ class App extends React.Component{
     //       messages: this.state.messages.concat({name: name, text: text}) //updates Firebase and the local state
     //     });
     //   },
-      messages: []
+      messages: [],
+      currentUser: 'Mitch'
     }
     this.sendMessage = this.sendMessage.bind(this);
   }
+
   sendMessage(name, text){
     this.setState({
       messages: this.state.messages.concat({name: name, text: text}) //updates Firebase and the local state
@@ -52,8 +54,8 @@ class App extends React.Component{
           <div className="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
             <div className="panel panel-default">
               <MessageTitle />
-              <MessageList messages={this.state.messages}/>
-              <MessageForm sendMessage={this.sendMessage} />
+              <MessageList messages={this.state.messages} currentUser={this.state.currentUser} />
+              <MessageForm sendMessage={this.sendMessage} currentUser={this.state.currentUser} />
             </div>
           </div>
         </div>

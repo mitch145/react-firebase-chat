@@ -14,7 +14,7 @@ class MessageForm extends React.Component{
   }
   handleSubmit(event) {
     event.preventDefault()
-    this.props.sendMessage('AI', this.state.value)
+    this.props.sendMessage(this.props.currentUser, this.state.value)
     this.setState({value: ''})
   }
   render(){
