@@ -5,6 +5,7 @@ import MessageList from './message-list';
 import MessageForm from './message-form'
 import * as firebase from 'firebase'
 import rebase from 're-base'
+import Loader from 'react-loader'
 
 
 
@@ -14,6 +15,7 @@ class App extends React.Component{
     this.state = {
       messages: [],
       currentUser: '',
+      loaded: false
     }
     const self=this;
     this.sendMessage = this.sendMessage.bind(this);
@@ -27,8 +29,7 @@ class App extends React.Component{
     });
     base.syncState('messages', {
       context: this,
-      state: 'messages',
-      loading: 'true'
+      state: 'messages'
     });
 
     function authDataCallback(user) {
@@ -37,7 +38,7 @@ class App extends React.Component{
       } else {
         console.log("User is logged out");
       }
-      self.setState({currentUser: user.displayName})
+      self.setState({currentUser: user.displayName, loaded: true})
     }
 
     var authHandler = function(error, result) {
@@ -67,28 +68,25 @@ class App extends React.Component{
       messages: this.state.messages.concat({name: name, text: text}) //updates Firebase and the local state
     })
   }
-  componentWillMount() {
-
-
-  }
   render(){
     let messages = [
       {id: 0, name: 'AI', text: 'Hello there.'},
       {id: 1, name: 'AI', text: 'How\'s it going?'}
     ]
     return(
-      <div className="container message-list">
-        <div className="row">
-          <div className="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
-            <div className="panel panel-default">
-
-              <MessageTitle />
-              <MessageList messages={this.state.messages} currentUser={this.state.currentUser} />
-              <MessageForm sendMessage={this.sendMessage} currentUser={this.state.currentUser} />
+      <Loader loaded={this.state.loaded}>
+        <div className="container message-list">
+          <div className="row">
+            <div className="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+              <div className="panel panel-default">
+                <MessageTitle />
+                <MessageList messages={this.state.messages} currentUser={this.state.currentUser} />
+                <MessageForm sendMessage={this.sendMessage} currentUser={this.state.currentUser} />
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </Loader>
     )
   }
 }
