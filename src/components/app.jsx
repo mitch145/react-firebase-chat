@@ -13,44 +13,12 @@ class App extends React.Component{
     super();
     this.state = {
       messages: [],
-      currentUser: 'Mitch'
+      currentUser: '',
     }
+    const self=this;
     this.sendMessage = this.sendMessage.bind(this);
-  }
 
-  sendMessage(name, text){
-    this.setState({
-      messages: this.state.messages.concat({name: name, text: text}) //updates Firebase and the local state
-    })
-  }
-  componentWillMount() {
-    var config = {
-      apiKey: "AIzaSyBmiFPSzLtDBgNi2a-v5lIOP75MpI1bSrA",
-      authDomain: "fir-chat-4097b.firebaseapp.com",
-      databaseURL: "https://fir-chat-4097b.firebaseio.com",
-      storageBucket: "fir-chat-4097b.appspot.com",
-      messagingSenderId: "121679038004"
-    };
-    // firebase.initializeApp(config);
-    // var provider = new firebase.auth.FacebookAuthProvider();
-    // firebase.auth().signInWithPopup(provider).then(function(result) {
-    //   // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-    //   var token = result.credential.accessToken;
-    //   // The signed-in user info.
-    //   var user = result.user;
-    //   this.state.user = user.displayName
-    //
-    // }).catch(function(error) {
-    //   // Handle Errors here.
-    //   var errorCode = error.code;
-    //   var errorMessage = error.message;
-    //   // The email of the user's account used.
-    //   var email = error.email;
-    //   // The firebase.auth.AuthCredential type that was used.
-    //   var credential = error.credential;
-    //   // ...
-    // });
-    // console.log(this.state)
+    // database setup
     var base = rebase.createClass({
       apiKey: "AIzaSyBmiFPSzLtDBgNi2a-v5lIOP75MpI1bSrA",
       authDomain: "fir-chat-4097b.firebaseapp.com",
@@ -59,18 +27,48 @@ class App extends React.Component{
     });
     base.syncState('messages', {
       context: this,
-      state: 'messages'
+      state: 'messages',
+      loading: 'true'
     });
-    function handleAuthentication(user){
-      
+
+    function authDataCallback(user) {
+      if (user) {
+        console.log("User " + user.uid + " is logged in with " + user.providerId);
+      } else {
+        console.log("User is logged out");
+      }
+      self.setState({currentUser: user.displayName})
     }
+
     var authHandler = function(error, result) {
       if(error){
         console.log(error)
       };
-      handleAuthentication(result.user);
+      authDataCallback(result.user);
     }
-    base.authWithOAuthPopup('facebook', authHandler);
+    // base.authWithOAuthPopup('facebook', authHandler);
+
+    var onRedirectBack = function(error, authData){
+      if(error) console.log(error);
+      if(authData.user){
+        authDataCallback(authData.user);
+      } else {
+        //redirect to facebook for auth
+        base.authWithOAuthRedirect('facebook', authHandler);
+      }
+    }
+
+    base.authGetOAuthRedirectResult(onRedirectBack);
+
+  }
+
+  sendMessage(name, text){
+    this.setState({
+      messages: this.state.messages.concat({name: name, text: text}) //updates Firebase and the local state
+    })
+  }
+  componentWillMount() {
+
 
   }
   render(){
@@ -83,6 +81,7 @@ class App extends React.Component{
         <div className="row">
           <div className="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
             <div className="panel panel-default">
+
               <MessageTitle />
               <MessageList messages={this.state.messages} currentUser={this.state.currentUser} />
               <MessageForm sendMessage={this.sendMessage} currentUser={this.state.currentUser} />
